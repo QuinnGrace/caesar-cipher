@@ -103,6 +103,8 @@ if user_choice == 1:
     message_to_encode = input("What message would you like to encode? --> ")
     message_to_encode = message_to_encode.upper()
     #input for number of places moved
+    num_shift = int(input("How many units would you like to shift it? --> "))
+    encoded_message = encrypt(message_to_encode, num_shift)
     encoded_message = encrypt(message_to_encode, 5)
     print(f'Your encrypted message reads: {encoded_message}')
     
@@ -114,7 +116,8 @@ elif user_choice == 2:
     type_of_decryption = int(input("Do you know how many places the characters were moved to encode the message? \n 1 - Yes \n 2 - No\n --> "))
     #input for number of places moved
     if type_of_decryption == 1:
-        decoded_message = decrypt(message_to_decode, 5)
+        num_shift = int(input("How many units would you like to shift it? --> "))
+        decoded_message = decrypt(message_to_decode, num_shift)
     else:
         decoded_message = decrypt_hard(message_to_decode)
     print(f"Once decrypted, your message reads {decoded_message}")
