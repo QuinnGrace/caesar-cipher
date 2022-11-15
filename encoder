@@ -22,9 +22,12 @@ def encrypt (message, num_to_move):
     # iterates through each character in the string and converts to unicode then shifts the value, converts back to a character and appends to the encoded_string list
     for char in message:
         char_num = ord(char) + num_to_move
-        encoded_string.append(chr(char_num))
-        
-    # combines the list into one legible string
+        # if the shifted letter is beyond z, the program should start at a again
+        if char_num > 90:
+            char_num = 65 + char_num%65
+            encoded_string.append(chr(char_num))
+        else:
+            encoded_string.append(chr(char_num))
     neat_encoded_string = "".join(encoded_string)
         
     return neat_encoded_string
