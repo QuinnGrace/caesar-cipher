@@ -1,44 +1,95 @@
 import sys
 
+from enchant.checker import SpellChecker
+
+
 encoded_string = []    
+# empty string list to store the result of each iteration of the loop combined
 def encrypt (message, num_to_move):
+    '''
+    Takes user input and shifts to the right to encode the message, using unicode values and changing them accordingly
+
+    Parameters
+    ----------
+    message : string
+    num_to_move : int
+
+    Returns
+    -------
+    neat_encoded_string : string
+
+    '''
+    # iterates through each character in the string and converts to unicode then shifts the value, converts back to a character and appends to the encoded_string list
     for char in message:
         char_num = ord(char) + num_to_move
         encoded_string.append(chr(char_num))
-    
+        
+    # combines the list into one legible string
     neat_encoded_string = "".join(encoded_string)
         
     return neat_encoded_string
 
-decoded_string = []    
+decoded_string = []  
+# empty string list to store the result of each iteration of the loop combined  
 def decrypt (message, num_to_move):
+    '''
+    Takes user input and shifts to the left to decode the message, using unicode values and changing them accordingly
+
+    Parameters
+    ----------
+    message : string
+    num_to_move : int
+
+    Returns
+    -------
+    neat_decoded_string : string
+
+    '''
+    # iterates through each character in the string and converts to unicode then shifts the value, converts back to a character and appends to the encoded_string list
     for char in message:
         char_num = ord(char) - num_to_move
         decoded_string.append(chr(char_num))
-    
+        
+    # combines the list into one legible string
     neat_decoded_string = "".join(decoded_string)
         
     return neat_decoded_string
 
-from enchant.checker import SpellChecker
 
 
  
 def decrypt_hard (message):
+    '''
+    Takes user input and shifts to the left 1 unit at a time to attempt to decode the message, using unicode values and changing them accordingly, until legible message is found
+    Parameters
+    ----------
+    message : string
+
+    Returns
+    -------
+    neat_decoded_string : string
+
+    '''
     for i in range(25):
         decoded_string = []
+        # empty string list to store the result of each iteration of the loop combined
+        
+        # shifts the message by 1 each iteration
         for char in message:
             char_num = ord(char) - i
             decoded_string.append(chr(char_num))
+            # joins the list into a readable string
             neat_decoded_string = "".join(decoded_string) 
+        # spelling checker checks for errors in spelling (too many = gibberish = not decoded)  
         chkr = SpellChecker("en_US")
         chkr.set_text(neat_decoded_string)
         acc_counter = 0
         for err in chkr:
-            #print("ERROR:", err.word)
+            
             acc_counter = acc_counter + 1
-#        print(acc_counter)
-        if acc_counter<5:
+        # tinker with this variable to get better results
+        # if 1 or more spelling errors are found then test the next iteration
+        if acc_counter<=1:
             break
     i = i + 1
     return neat_decoded_string
